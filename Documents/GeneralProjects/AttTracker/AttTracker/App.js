@@ -5,11 +5,18 @@ import LoginScreen from './screens/LoginScreen';
 import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import PasswordConfirmScreen from './screens/PasswordConfirmScreen';
+import HomeScreen from './screens/HomeScreen'
+import BottomTab from './routes/BottomTab';
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
 
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <PasswordConfirmScreen/>
+      <NavigationContainer>
+        <BottomTab/>
+      </NavigationContainer>
   )
     
 }
