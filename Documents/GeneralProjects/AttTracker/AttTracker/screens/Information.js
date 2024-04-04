@@ -11,7 +11,7 @@ function Information() {
             width:364,
             height:78,
             flexDirection:'row',
-            marginTop:140,
+            marginTop:100,
             backgroundColor:'#0F6579',
             borderRadius:16,
             alignItems:'center',

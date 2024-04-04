@@ -2,6 +2,9 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Information from '../screens/Information';
+import GradesScreen from '../screens/GradesScreen';
+import SemesterPlanScreen from '../screens/SemesterPlanScreen';
+import StudentListScreen from '../screens/StudentListScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -10,9 +13,12 @@ function BottomTab() {
     <Tab.Navigator
     barStyle={{ backgroundColor: '#fff' }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Information" component={Information}/>
+      <Tab.Screen name="Home"         component={HomeScreen} />
+      <Tab.Screen name="Profile"      component={ProfileScreen} />
+      <Tab.Screen name="Information"  component={Information}/>
+      <Tab.Screen name="Grades"       component={GradesScreen}/>
+      <Tab.Screen name="Semester"     component={SemesterPlanScreen}/>
+      <Tab.Screen name="List"         component={StudentListScreen}/>
     </Tab.Navigator>
   );
 }
