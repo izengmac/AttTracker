@@ -9,13 +9,31 @@ import HomeScreen from './screens/HomeScreen'
 import BottomTab from './routes/BottomTab';
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
+import StudentListScreen from './screens/StudentListScreen';
+import StudentDetails from './screens/StudentDetails';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
       <NavigationContainer>
-        <BottomTab/>
+     <Stack.Navigator>
+     <Stack.Screen
+         name="Home"
+         component={BottomTab}
+         options={{ headerShown: false }}
+        />
+         <Stack.Screen
+         name="StudentList"
+         component={StudentListScreen}
+         options={{ headerShown: false }}
+        />
+        <Stack.Screen
+         name="StudentDetails"
+         component={StudentDetails}
+         
+        />
+     </Stack.Navigator>
       </NavigationContainer>
   )
     

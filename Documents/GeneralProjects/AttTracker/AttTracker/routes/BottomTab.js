@@ -4,7 +4,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import Information from '../screens/Information';
 import GradesScreen from '../screens/GradesScreen';
 import SemesterPlanScreen from '../screens/SemesterPlanScreen';
-import StudentListScreen from '../screens/StudentListScreen';
+import GroupListScreen from '../screens/GroupListScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,7 +18,7 @@ function BottomTab() {
       <Tab.Screen name="Information"  component={Information}/>
       <Tab.Screen name="Grades"       component={GradesScreen}/>
       <Tab.Screen name="Semester"     component={SemesterPlanScreen}/>
-      <Tab.Screen name="List"         component={StudentListScreen}/>
+      <Tab.Screen name="Groups"       component={GroupListScreen}/>
     </Tab.Navigator>
   );
 }

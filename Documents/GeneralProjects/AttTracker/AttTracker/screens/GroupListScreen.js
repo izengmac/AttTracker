@@ -2,7 +2,7 @@ import React from 'react';
 import {View,Text,Image, TouchableOpacity} from 'react-native'
 
 
-function StudentListScreen({navigation}) {
+function GroupListScreen({navigation}) {
   return (
     <View>
         <View style={{
@@ -19,12 +19,12 @@ function StudentListScreen({navigation}) {
                 fontSize:18,
                 fontWeight:'600',
                 textAlign:'center'
-            }}>Students</Text>
+            }}>Groups</Text>
             <View style={{
                 flexDirection:'row'
             }}>
             <Image 
-            source={require('../src/assets/users-medical.png')}
+            source={require('../src/assets/user-add.png')}
             style={{
                 width:30,
                 height:30
@@ -40,63 +40,20 @@ function StudentListScreen({navigation}) {
             />
             </View>
         </View>
-        <TouchableOpacity
-         style={{
-            borderRadius:1,
-            borderColor:'#D9D9D9',
-            borderBottomWidth:2,
-            paddingBottom:10
-
-        }}
-        
-        onPress={() =>
-            navigation.navigate('StudentDetails')
-          }
-        
-        >
-           <View 
-           style={{
-               flexDirection:'row',
-               paddingTop:10,
-               
-            }} >
-           <Image 
-            source={require('../src/assets/users (1).png')}
-            style={{
-                width:30,
-                height:30,
-                marginLeft:30
-            }}
-            />
-           <Text style={{
-            fontSize:20,
-            fontWeight:'600',
-            paddingLeft:2
-           }}
-           >Anna MIller</Text>
-           </View>
-           <Text
-           style={{
-            fontSize:16,
-            fontWeight:'400',
-            paddingLeft:60
-           }}
-           >2 times present (40%) last tie at 9/19/24</Text>
-        </TouchableOpacity>
         <TouchableOpacity 
         style={{
             borderRadius:1,
             borderColor:'#D9D9D9',
             borderBottomWidth:2,
-            paddingBottom:10
+            paddingBottom:10,
+            
 
         }}
-        
         onPress={() =>
             navigation.navigate('StudentList')
           }
+        
         >
-
            <View 
            style={{
                flexDirection:'row',
@@ -116,7 +73,7 @@ function StudentListScreen({navigation}) {
             fontWeight:'600',
             paddingLeft:2
            }}
-           >Anna MIller</Text>
+           >Group 215</Text>
            </View>
            <Text
            style={{
@@ -126,9 +83,7 @@ function StudentListScreen({navigation}) {
            }}
            >2 times present (40%) last tie at 9/19/24</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-        
-        style={{
+        <TouchableOpacity style={{
             borderRadius:1,
             borderColor:'#D9D9D9',
             borderBottomWidth:2,
@@ -138,7 +93,6 @@ function StudentListScreen({navigation}) {
         onPress={() =>
             navigation.navigate('StudentList')
           }
-        
         >
            <View 
            style={{
@@ -159,7 +113,48 @@ function StudentListScreen({navigation}) {
             fontWeight:'600',
             paddingLeft:2
            }}
-           >Anna Miller</Text>
+           >Group 215</Text>
+           </View>
+           <Text
+           style={{
+            fontSize:16,
+            fontWeight:'400',
+            paddingLeft:60
+           }}
+           >2 times present (40%) last tie at 9/19/24</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{
+            borderRadius:1,
+            borderColor:'#D9D9D9',
+            borderBottomWidth:2,
+            paddingBottom:10
+
+        }}
+        
+        onPress={() =>
+            navigation.navigate('StudentList')
+          }
+        >
+           <View 
+           style={{
+               flexDirection:'row',
+               paddingTop:10,
+               
+            }} >
+           <Image 
+            source={require('../src/assets/users (1).png')}
+            style={{
+                width:30,
+                height:30,
+                marginLeft:30
+            }}
+            />
+           <Text style={{
+            fontSize:20,
+            fontWeight:'600',
+            paddingLeft:2
+           }}
+           >Group 215</Text>
            </View>
            <Text
            style={{
@@ -173,4 +168,4 @@ function StudentListScreen({navigation}) {
   )
 }
 
-export default StudentListScreen
+export default GroupListScreen;
