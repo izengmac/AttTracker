@@ -2,55 +2,32 @@ import React from 'react';
 import {View,Text,Image, TouchableOpacity} from 'react-native'
 
 
-function GroupListScreen({navigation}) {
+function DatesStudentsScreen ({navigation}) {
   return (
     <View>
         <View style={{
-            paddingTop:80,
+            paddingTop:0,
             paddingHorizontal:16,
             flexDirection:'row',
             justifyContent:'space-between',
             borderRadius:1,
             borderColor:'#D9D9D9',
-            borderWidth:2,
-            paddingBottom:10
+            borderWidth:1,
+           
         }}>
-            <Text style={{
-                fontSize:18,
-                fontWeight:'600',
-                textAlign:'center'
-            }}>Groups</Text>
-            <View style={{
-                flexDirection:'row'
-            }}>
-            <Image 
-            source={require('../src/assets/user-add.png')}
-            style={{
-                width:30,
-                height:30
-            }}
-            />
-            <Image 
-            source={require('../src/assets/menu-dots-vertical.png')}
-            style={{
-                width:30,
-                height:30,
-                marginLeft:30
-            }}
-            />
-            </View>
+           
         </View>
         <TouchableOpacity 
         style={{
             borderRadius:1,
             borderColor:'#D9D9D9',
             borderBottomWidth:2,
-            paddingBottom:10,
+            paddingBottom:2,
             
 
         }}
         onPress={() =>
-            navigation.navigate('DatesStudents')
+            navigation.navigate('StudentList')
           }
         
         >
@@ -91,7 +68,7 @@ function GroupListScreen({navigation}) {
 
         }}
         onPress={() =>
-            navigation.navigate('DatesStudents')
+            navigation.navigate('StudentList')
           }
         >
            <View 
@@ -132,7 +109,7 @@ function GroupListScreen({navigation}) {
         }}
         
         onPress={() =>
-            navigation.navigate('DatesStudents')
+            navigation.navigate('StudentList')
           }
         >
            <View 
@@ -168,4 +145,4 @@ function GroupListScreen({navigation}) {
   )
 }
 
-export default GroupListScreen;
+export default DatesStudentsScreen ;
