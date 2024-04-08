@@ -58,7 +58,7 @@ function DateDetails() {
         style={{
           height: "75%",
           width: "full",
-          backgroundColor: "gray",
+          backgroundColor: "#EAE3E6",
         }}
       >
         <View
