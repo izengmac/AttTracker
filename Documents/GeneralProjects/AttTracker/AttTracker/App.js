@@ -12,6 +12,8 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import StudentListScreen from './screens/StudentListScreen';
 import StudentDetails from './screens/StudentDetails';
 import DatesStudentsScreen from './screens/DatesStudentsScreen';
+import DatesListScreen from './screens/DatesList';
+import DateDetails from './screens/DateDetails'
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +39,16 @@ export default function App() {
          <Stack.Screen
          name="DatesStudents"
          component={DatesStudentsScreen}
+         
+        />
+         <Stack.Screen
+         name="DatesList"
+         component={DatesListScreen}
+         
+        />
+        <Stack.Screen
+         name="DateDetails"
+         component={DateDetails}
          
         />
      </Stack.Navigator>
