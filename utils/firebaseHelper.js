@@ -1,35 +1,35 @@
-import {getApp, getApps, initializeApp} from "firebase/app";
-import {initializeAuth , getReactNativerPersistence} from "firebase/auth";
-import ReactNativeAsyncStorage from '@react-native-community/async-storage';
-
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
+import AsyncStorage from "@react-native-community/async-storage";
 
 let firebaseApp;
- export const getFirebaseApp = () => {
-    if (firebaseApp){
-        return firebaseApp;
 
+export const getFirebaseApp = () => {
+    if (firebaseApp) {
+        return firebaseApp;
     }
 
-    //Firebase configuration 
+    // Firebase configuration
     const firebaseConfig = {
-        apiKey: "<KEY>",
-        authDomain: "attendencetracker-7bce5.firebaseapp.com",
-        databaseURL: "https://attendencetracker-7bce5.firebaseio.com",
-        projectId: "attendencetracker-7bce5",
-        storageBucket: "attendencetracker-7bce5.appspot.com",
-        messagingSenderId: "151528077032",
-        appId: "1:151528077032:web:c09b31ada6b6813b90bb5d",
-        measurementId: "G-V05GM2XDJG"
-    };
+        apiKey: "AIzaSyAsORLt2PxHyF5wfEWWYCIRrehHpTI5dZA",
+        authDomain: "attendencetracker-61b03.firebaseapp.com",
+        projectId: "attendencetracker-61b03",
+        storageBucket: "attendencetracker-61b03.appspot.com",
+        messagingSenderId: "189553790087",
+        appId: "1:189553790087:web:713528e1fe137dc5ce7c22",
+        measurementId: "G-Q3DWK9Q725"
+      };
 
     const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-    //Initialize Firebase Auth with React Native Persistence
-    initializeAuth(app, {
-        persistence: getReactNativerPersistence(ReactNativeAsyncStorage)
-    })
+    // Initialize Firebase Auth only if it hasn't been initialized yet
+    if (!getAuth(app)) {
+        initializeAuth(app, {
+            persistence: getReactNativePersistence(AsyncStorage)
+        });
+    }
 
     firebaseApp = app;
 
     return app;
- }
+};

@@ -1,5 +1,5 @@
 
-import React, { useCallback, useReducer } from 'react'
+import React, { useCallback, useReducer, useState } from 'react'
 import {View,Text,TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native'
 import {reducer} from "../utils/reducers/formReducer"
 import { validateInput } from '../utils/actions/formActions';
@@ -33,10 +33,6 @@ function LoginScreen() {
     dispatchFormState({inputId,validationResult:result , inputValue});
     
   },[dispatchFormState])
-
-  const submitHandler = () => {
-    console.log(formState.inputValues.email, formState.inputValues.password)
-  }
 
 
   return (
@@ -100,7 +96,7 @@ function LoginScreen() {
             alignItems:'center',
             borderRadius:24
         }}
-        onPress={submitHandler}
+       
       >
        <Text
        style={{

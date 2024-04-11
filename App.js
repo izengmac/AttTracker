@@ -15,13 +15,19 @@ import DatesStudentsScreen from './screens/DatesStudentsScreen';
 import DatesListScreen from './screens/DatesList';
 import DateDetails from './screens/DateDetails'
 import SignupScreen from './screens/SignupScreen';
+import {Provider} from 'react-redux';
+import {store} from './store/store';
+
 
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
   return (
-    <LoginScreen/>
+    <Provider store={store}>
+      <SignupScreen/>
+    </Provider>
+    
   )
     //   <NavigationContainer>
     //  <Stack.Navigator>
