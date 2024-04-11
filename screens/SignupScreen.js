@@ -25,7 +25,7 @@ const initialState ={
 
 
 
-function LoginScreen() {
+function SignupScreen() {
   const [formState, dispatchFormState] = useReducer(reducer, initialState)
 
   const inputChangeHandler = useCallback((inputId, inputValue) => {
@@ -34,9 +34,6 @@ function LoginScreen() {
     
   },[dispatchFormState])
 
-  const submitHandler = () => {
-    console.log(formState.inputValues.email, formState.inputValues.password)
-  }
 
 
   return (
@@ -50,12 +47,27 @@ function LoginScreen() {
             fontSize:32,
             fontWeight:'700',
             
-        }}>Welcome Back</Text>
+        }}>Welcome</Text>
         <Text style={{
             fontSize:20,
             paddingTop:10,
             fontWeight:'400'
-        }}>Log In Now</Text>
+        }}>Sign Up Now</Text>
+        <View>
+            <Text style={{
+                fontSize:18,
+                paddingTop:40,
+                marginBottom:4,
+                fontWeight:'400'
+            }}>User Name</Text>
+            <Input
+            id='fullName'
+            placeholder='Name'
+            errorText={formState.inputValidities['fullName']}
+            onInputChanged={inputChangeHandler}
+            
+            />
+        </View>
         <View>
             <Text style={{
                 fontSize:18,
@@ -94,13 +106,12 @@ function LoginScreen() {
         <TouchableOpacity
         style={{
             backgroundColor:'#162949',
-            width:275,
+            width:255,
             height:52,
             justifyContent:'center',
             alignItems:'center',
             borderRadius:24
         }}
-        onPress={submitHandler}
       >
        <Text
        style={{
@@ -108,7 +119,7 @@ function LoginScreen() {
         fontSize:20,
         fontWeight:'500'
        }}
-       >Log In</Text>
+       >SignUp</Text>
         </TouchableOpacity>
         </View>
         <Text style={{
@@ -117,7 +128,7 @@ function LoginScreen() {
                 marginBottom:4,
                 fontWeight:'400',
                 textAlign:'center'
-            }}>Don't have an account? SignUp</Text>
+            }}>Have an account? SignIn</Text>
     </View>
   )
 }
@@ -141,4 +152,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default LoginScreen
+export default SignupScreen

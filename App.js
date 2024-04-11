@@ -14,46 +14,50 @@ import StudentDetails from './screens/StudentDetails';
 import DatesStudentsScreen from './screens/DatesStudentsScreen';
 import DatesListScreen from './screens/DatesList';
 import DateDetails from './screens/DateDetails'
+import SignupScreen from './screens/SignupScreen';
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
   return (
-      <NavigationContainer>
-     <Stack.Navigator>
-     <Stack.Screen
-         name="Home"
-         component={BottomTab}
-         options={{ headerShown: false }}
-        />
-         <Stack.Screen
-         name="StudentList"
-         component={StudentListScreen}
-         options={{ headerShown: false }}
-        />
-        <Stack.Screen
-         name="StudentDetails"
-         component={StudentDetails}
-         
-        />
-         <Stack.Screen
-         name="DatesStudents"
-         component={DatesStudentsScreen}
-         
-        />
-         <Stack.Screen
-         name="DatesList"
-         component={DatesListScreen}
-         
-        />
-        <Stack.Screen
-         name="DateDetails"
-         component={DateDetails}
-         
-        />
-     </Stack.Navigator>
-      </NavigationContainer>
+    <LoginScreen/>
   )
+    //   <NavigationContainer>
+    //  <Stack.Navigator>
+    //  <Stack.Screen
+    //      name="Home"
+    //      component={BottomTab}
+    //      options={{ headerShown: false }}
+    //     />
+    //      <Stack.Screen
+    //      name="StudentList"
+    //      component={StudentListScreen}
+    //      options={{ headerShown: true }}
+    //     />
+    //     <Stack.Screen
+    //      name="StudentDetails"
+    //      component={StudentDetails}
+         
+    //     />
+    //      <Stack.Screen
+    //      name="DatesStudents"
+    //      component={DatesStudentsScreen}
+         
+    //     />
+    //      <Stack.Screen
+    //      name="DatesList"
+    //      component={DatesListScreen}
+         
+    //     />
+    //     <Stack.Screen
+    //      name="DateDetails"
+    //      component={DateDetails}
+         
+    //     />
+    //  </Stack.Navigator>
+    //   </NavigationContainer>
+  
     
 }
 
