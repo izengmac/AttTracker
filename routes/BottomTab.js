@@ -3,9 +3,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Information from '../screens/Information';
 import GradesScreen from '../screens/GradesScreen';
-import SemesterPlanScreen from '../screens/SemesterPlanScreen';
 import GroupListScreen from '../screens/GroupListScreen';
-import DatesStudentsScreen from '../screens/DatesStudentsScreen';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 
