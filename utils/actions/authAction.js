@@ -27,7 +27,7 @@ export const signUp = (fullName, email, password) => {
       const { accessToken, expirationTime } = stsTokenManager;
       const expiryDate = new Date(expirationTime);
 
-      const userData = await createUser(fullName, uid, email);
+      const userData = await createUser(fullName, email ,uid);
 
       dispatch(authenticate({ token: accessToken, userData }));
 
@@ -76,8 +76,7 @@ export const signIn = (email, password) => {
             const expiryDate = new Date(expirationTime);
       
            const userData = await getuserData(uid);
-           console.log('hgh' , userData)
-
+           console.log(uid);
            dispatch(authenticate({token: accessToken, userData}));
 
            saveToDataStorage(accessToken, uid, expiryDate);
@@ -103,15 +102,16 @@ export const signIn = (email, password) => {
   };
 };
 
-const createUser = async (fullName, email, userId) => {
+const createUser = async (fullName,email,userId) => {
   const userData = {
     fullName,
     email,
     userId,
     signUpDate: new Date().toISOString(),
   };
+  console.log('userid',userId)
   const dbRef = ref(getDatabase());
-  const childRef = child(dbRef, `users`);
+  const childRef = child(dbRef, `users/${userId}`);
   await set(childRef, userData);
   return userData;
 };
