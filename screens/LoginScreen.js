@@ -1,9 +1,11 @@
 
-import React, { useCallback, useReducer, useState } from 'react'
-import {View,Text,TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import {View,Text,TextInput, Button, StyleSheet, TouchableOpacity, Alert} from 'react-native'
 import {reducer} from "../utils/reducers/formReducer"
 import { validateInput } from '../utils/actions/formActions';
 import Input from "../components/Input";
+import { useDispatch } from 'react-redux';
+import { signIn } from '../utils/actions/authAction';
 
 
 const isTestMode = true;
@@ -27,14 +29,37 @@ const initialState ={
 
 function LoginScreen() {
   const [formState, dispatchFormState] = useReducer(reducer, initialState)
-
+  const dispatch = useDispatch()
+  const [error, setError] = useState()
   const inputChangeHandler = useCallback((inputId, inputValue) => {
     const result = validateInput(inputId, inputValue);
     dispatchFormState({inputId,validationResult:result , inputValue});
     
   },[dispatchFormState])
 
+const authHandler = async () =>{
+  try{
+    console.log(formState.inputValues.email)
+    const action = signIn(
+      formState.inputValues.email,
+      formState.inputValues.password,
+    );
 
+    await dispatch(action);
+    setError(null);
+    Alert.alert("Login successful", "Successfully logged in ")
+
+  }catch(error){
+    console.log(error);
+    setError(error.message);
+  }
+}
+
+useEffect(() => {
+  if(error){
+    Alert.alert("An error accured", error)
+  }
+},[error])
   return (
     <View style={{
         flex:1,
@@ -96,6 +121,7 @@ function LoginScreen() {
             alignItems:'center',
             borderRadius:24
         }}
+        onPress = {authHandler}
        
       >
        <Text

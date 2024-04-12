@@ -1,5 +1,5 @@
 
-import React, { useCallback, useReducer ,useState} from 'react'
+import React, { useCallback, useReducer ,useState, useEffect} from 'react'
 import {View,Text,TextInput, Button, StyleSheet, TouchableOpacity, Alert} from 'react-native'
 import {reducer} from "../utils/reducers/formReducer"
 import { validateInput } from '../utils/actions/formActions';
@@ -30,7 +30,7 @@ const initialState ={
 function SignupScreen() {
   const [formState, dispatchFormState] = useReducer(reducer, initialState)
   const dispatch = useDispatch()
-  const [error, setError] = useState(null)
+  const [error, setError] = useState()
 
   const inputChangeHandler = useCallback((inputId, inputValue) => {
     const result = validateInput(inputId, inputValue);
@@ -57,6 +57,14 @@ function SignupScreen() {
           setError(error.message)
       }
   }
+
+  useEffect(() => {
+    if(error){
+      Alert.alert("An error accured", error)
+    }
+  },[error])
+
+
 
 
   return (
