@@ -1,7 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
+import { getFirebaseApp } from "../utils/firebaseHelper";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { getuserData } from "../utils/actions/userActions";
+import { child, getDatabase, get, ref } from "firebase/database";
+
+
 
 function ProfileScreen() {
+  const [userdetails, setUserDetails] = useState({})
+  
+  const app = getFirebaseApp();
+  const auth = getAuth(app);
+
+  const {uid, stsTokenManager} = auth.currentUser;
+  const {accessToken, expirationTime} = stsTokenManager;
+  const expiryDate = new Date(expirationTime);
+  console.log(uid)
+
+  const getuserData = async (uid) => {
+    try {
+      const app = getFirebaseApp();
+      const dbRef = ref(getDatabase(app));
+  
+      const userRef = child(dbRef, `users/${uid}`);
+  
+      const snapshot = await get(userRef)
+      console.log(snapshot.val())
+      setUserDetails(snapshot.val())
+  
+      return snapshot.val();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  useEffect(() =>{
+    getuserData(uid)
+  },[])
+
   return (
     <View
       style={{
@@ -37,7 +79,7 @@ function ProfileScreen() {
             fontWeight: "400",
           }}
         >
-          YOUR EMAIL
+          YOUR NAME
         </Text>
         <Text
           style={{
@@ -45,7 +87,7 @@ function ProfileScreen() {
             fontWeight: "600",
           }}
         >
-          Alexandrah@gmail.com
+        {userdetails.fullName}
         </Text>
       </View>
       <View
@@ -61,7 +103,7 @@ function ProfileScreen() {
             fontWeight: "400",
           }}
         >
-          YOUR PASSWORD
+          YOUR EMAIL
         </Text>
         <Text
           style={{
@@ -69,7 +111,7 @@ function ProfileScreen() {
             fontWeight: "600",
           }}
         >
-          Alexandrah1278
+          {userdetails.email}
         </Text>
       </View>
       <View

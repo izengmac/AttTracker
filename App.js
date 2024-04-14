@@ -1,11 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import OnboardingScreen from './screens/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
-import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import PasswordConfirmScreen from './screens/PasswordConfirmScreen';
-import HomeScreen from './screens/HomeScreen'
 import BottomTab from './routes/BottomTab';
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
@@ -28,21 +24,6 @@ export default function App() {
      <Provider store={store}>
     <NavigationContainer>
      <Stack.Navigator>
-     <Stack.Screen 
-     name="SignUpScreen"     
-     component={SignupScreen}
-      options={{ headerShown: false }}
-     
-     >
-     </Stack.Screen>
-     <Stack.Screen 
-     name="LoginScreen"     
-     component={LoginScreen}
-      options={{ headerShown: false }}
-     
-     >
-     </Stack.Screen>
-
      <Stack.Screen
          name="Home"
          component={BottomTab}

@@ -140,7 +140,8 @@ useEffect(() => {
                 marginBottom:4,
                 fontWeight:'400',
                 textAlign:'center'
-            }}>Don't have an account? SignUp</Text>
+            }}
+            >Don't have an account? SignUp</Text>
     </View>
   )
 }

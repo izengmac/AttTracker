@@ -161,7 +161,9 @@ function SignupScreen({navigation}) {
                 marginBottom:4,
                 fontWeight:'400',
                 textAlign:'center'
-            }}>Have an account? SignIn</Text>
+            }}
+          
+            >Have an account? SignIn</Text>
     </View>
   )
 }

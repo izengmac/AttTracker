@@ -10,6 +10,7 @@ export const getuserData = async (userId) => {
     const userRef = child(dbRef, `users/${userId}`);
 
     const snapshot = await get(userRef)
+    
 
     return snapshot.val();
   } catch (error) {

@@ -75,11 +75,12 @@ export const signIn = (email, password) => {
             const { accessToken, expirationTime } = stsTokenManager;
             const expiryDate = new Date(expirationTime);
       
-           const userData = await getuserData(uid);
-           console.log(uid);
-           dispatch(authenticate({token: accessToken, userData}));
+            const userData = await getuserData(uid);
+            console.log(uid);
+            dispatch(authenticate({token: accessToken, userData}));
 
-           saveToDataStorage(accessToken, uid, expiryDate);
+            
+            saveToDataStorage(accessToken, uid, expiryDate);
     } catch (error) {
       console.log(error);
       
