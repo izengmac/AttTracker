@@ -7,7 +7,6 @@ import Input from "../components/Input";
 import { useDispatch } from 'react-redux';
 import { signUp } from '../utils/actions/authAction';
 
-
 const isTestMode = true;
 
 const initialState ={
@@ -26,8 +25,7 @@ const initialState ={
 }
 
 
-
-function SignupScreen() {
+function SignupScreen({navigation}) {
   const [formState, dispatchFormState] = useReducer(reducer, initialState)
   const dispatch = useDispatch()
   const [error, setError] = useState()
@@ -39,6 +37,7 @@ function SignupScreen() {
   },[dispatchFormState])
   
   const authHandler =  async() => {
+
     try{
       console.log(typeof formState.inputValues.email)
        const action = signUp(
@@ -48,9 +47,10 @@ function SignupScreen() {
        );
 
        await dispatch(action)
- 
        Alert.alert("Account Successfully Created","Account created")
        setError(null)
+       navigation.navigate('LoginScreen') 
+       
 
         }catch(error){
           console.log(error);

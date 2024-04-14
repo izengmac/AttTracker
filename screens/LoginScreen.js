@@ -27,7 +27,7 @@ const initialState ={
 
 
 
-function LoginScreen() {
+function LoginScreen({navigation}) {
   const [formState, dispatchFormState] = useReducer(reducer, initialState)
   const dispatch = useDispatch()
   const [error, setError] = useState()
@@ -48,6 +48,7 @@ const authHandler = async () =>{
     await dispatch(action);
     setError(null);
     Alert.alert("Login successful", "Successfully logged in ")
+    navigation.navigate('Home')
 
   }catch(error){
     console.log(error);

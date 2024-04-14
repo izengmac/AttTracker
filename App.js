@@ -25,11 +25,24 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-   
-    
-  
-      <NavigationContainer>
+     <Provider store={store}>
+    <NavigationContainer>
      <Stack.Navigator>
+     <Stack.Screen 
+     name="SignUpScreen"     
+     component={SignupScreen}
+      options={{ headerShown: false }}
+     
+     >
+     </Stack.Screen>
+     <Stack.Screen 
+     name="LoginScreen"     
+     component={LoginScreen}
+      options={{ headerShown: false }}
+     
+     >
+     </Stack.Screen>
+
      <Stack.Screen
          name="Home"
          component={BottomTab}
@@ -66,7 +79,13 @@ export default function App() {
      component={SemesterPlanScreen}>
       
      </Stack.Screen>
+     <Stack.Screen 
+     name="RegisterScreen"     
+     component={RegisterScreen}>
+      
+     </Stack.Screen>
       </NavigationContainer>
+      </Provider>
   )
     
 }
