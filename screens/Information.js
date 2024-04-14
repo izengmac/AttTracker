@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
-import { ref, update, getDatabase, child, get } from 'firebase/database';
+import { View, Text, Image, TouchableOpacity, Alert, TextInput, ScrollView, Linking, StyleSheet } from 'react-native';
+import { ref, push, getDatabase, child, get } from 'firebase/database';
 import { db } from "../utils/firebaseHelper"; // Import the Firebase database instance from firebaseInit.js
 
 function InformationScreen() {
   const [fileURI, setFileURI] = useState(null);
   const [url, setUrl] = useState('');
-  const [linkFromDB, setLinkFromDB] = useState('');
+  const [linksFromDB, setLinksFromDB] = useState([]);
 
-  // Function to fetch link from the database
-  const fetchLinkFromDB = async () => {
+  // Function to fetch all links from the database
+  const fetchLinksFromDB = async () => {
     try {
       const dbRef = ref(getDatabase());
       const snapshot = await get(child(dbRef, 'information/link'));
       if (snapshot.exists()) {
-        setLinkFromDB(snapshot.val());
+        const linksArray = [];
+        snapshot.forEach((childSnapshot) => {
+          linksArray.push(childSnapshot.val()); // Push each link to the array
+        });
+        setLinksFromDB(linksArray);
       } else {
         console.log("No data available");
       }
     } catch (error) {
-      console.error('Error fetching link from the database:', error);
+      console.error('Error fetching links from the database:', error);
     }
   };
 
-  // Fetch the link from the database when the component mounts
+  // Fetch all links from the database when the component mounts
   useEffect(() => {
-    fetchLinkFromDB();
+    fetchLinksFromDB();
   }, []);
 
   const uploadUrl = () => {
@@ -34,33 +38,34 @@ function InformationScreen() {
       return;
     }
 
-    // Update the link in the database
+    // Push the new link to the database
     const linkRef = ref(db, 'information/link');
-    const updates = { link: url }; // Assuming 'information/link' is the path to the link in your database
-
-    update(linkRef, updates)
+    push(linkRef, url) // Push the new URL instead of updating
       .then(() => {
-        console.log('Link successfully updated in the database!');
+        console.log('Link successfully added to the database!');
         setFileURI(url); // Set the uploaded URL to display in the UI
         setUrl(''); // Clear the input field
-        fetchLinkFromDB(); // Fetch the updated link from the database
+        fetchLinksFromDB(); // Fetch all links from the database to update the UI
       })
       .catch((error) => {
-        console.error('Error updating link in the database:', error);
-        Alert.alert('Error', 'Failed to update link in the database. Please try again.');
+        console.error('Error adding link to the database:', error);
+        Alert.alert('Error', 'Failed to add link to the database. Please try again.');
       });
   };
 
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      {fileURI && <Text style={{ marginBottom: 20 }}>Uploaded URL: {fileURI}</Text>}
-      {linkFromDB && (
-  <Text style={{ marginBottom: 20 }}>
-    Link from Database: {linkFromDB.link} {/* Assuming 'link' is the key holding the URL */}
-  </Text>
-)}
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 40 }}>
+      
+      {/* Display fetched links */}
+      {linksFromDB.map((link, index) => (
+        <TouchableOpacity key={index} onPress={() => Linking.openURL(link)} style={styles.linkContainer}>
+          <Text style={styles.linkText}>Link {index + 1}</Text>
+          <Text style={styles.urlText}>{link}</Text>
+        </TouchableOpacity>
+      ))}
+
       <TextInput
-        style={{ height: 40, marginTop: 100, borderColor: 'gray', borderWidth: 1, marginBottom: 20, width: 300 }}
+        style={{ height: 40, marginTop: 20, borderColor: 'gray', borderWidth: 1, marginBottom: 20, width: 300 }}
         onChangeText={(text) => setUrl(text)}
         value={url}
         placeholder="Enter URL here"
@@ -80,8 +85,27 @@ function InformationScreen() {
         <Image source={require('../src/assets/upload.png')} style={{ width: 44, height: 44 }} />
         <Text style={{ fontSize: 20, fontWeight: '600', color: 'white', paddingTop: 4 }}>Upload URL</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  linkContainer: {
+    width: '80%',
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  urlText: {
+    fontSize: 16,
+    color: 'blue',
+  },
+});
 
 export default InformationScreen;
