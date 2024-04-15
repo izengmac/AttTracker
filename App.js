@@ -3,72 +3,68 @@ import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import BottomTab from './routes/BottomTab';
-import {NavigationContainer} from "@react-navigation/native";
-import {createNativeStackNavigator} from "@react-navigation/native-stack"
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import StudentListScreen from './screens/StudentListScreen';
 import StudentDetails from './screens/StudentDetails';
 import DatesStudentsScreen from './screens/DatesStudentsScreen';
 import DatesListScreen from './screens/DatesList';
 import DateDetails from './screens/DateDetails'
 import SignupScreen from './screens/SignupScreen';
-import {Provider} from 'react-redux';
-import {store} from './store/store';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import SemesterPlanScreen from './screens/SemesterPlanScreen';
-
+import CreateGroupScreen from './screens/CreateGroupScreen';
 
 const Stack = createNativeStackNavigator();
 
-
 export default function App() {
   return (
-     <Provider store={store}>
-    <NavigationContainer>
-     <Stack.Navigator>
-     <Stack.Screen
-         name="Home"
-         component={BottomTab}
-         options={{ headerShown: false }}
-        />
-         <Stack.Screen
-         name="StudentList"
-         component={StudentListScreen}
-         options={{ headerShown: true }}
-        />
-        <Stack.Screen
-         name="StudentDetails"
-         component={StudentDetails}
-         
-        />
-         <Stack.Screen
-         name="DatesStudents"
-         component={DatesStudentsScreen}
-         
-        />
-         <Stack.Screen
-         name="DatesList"
-         component={DatesListScreen}
-         
-        />
-        <Stack.Screen
-         name="DateDetails"
-         component={DateDetails}
-         
-        />
-     </Stack.Navigator>
-     <Stack.Screen 
-     name="Semester"     
-     component={SemesterPlanScreen}>
-      
-     </Stack.Screen>
-     <Stack.Screen 
-     name="RegisterScreen"     
-     component={RegisterScreen}>
-      
-     </Stack.Screen>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={BottomTab}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="StudentList"
+            component={StudentListScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="StudentDetails"
+            component={StudentDetails}
+          />
+          <Stack.Screen
+            name="DatesStudents"
+            component={DatesStudentsScreen}
+          />
+          <Stack.Screen
+            name="DatesList"
+            component={DatesListScreen}
+          />
+          <Stack.Screen
+            name="DateDetails"
+            component={DateDetails}
+          />
+          <Stack.Screen
+            name="Semester"
+            component={SemesterPlanScreen}
+          />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+          />
+          <Stack.Screen
+            name="CreateGroupScreen"
+            component={CreateGroupScreen}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
-      </Provider>
+    </Provider>
   )
-    
 }
 
 const styles = StyleSheet.create({
