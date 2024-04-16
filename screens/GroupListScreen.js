@@ -3,8 +3,10 @@ import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import firebase from 'firebase/app';
 import { getDatabase, ref, onValue } from "firebase/database";
 
-function GroupListScreen({ navigation }) {
+
+function GroupListScreen({ navigation, route}) {
   const [groups, setGroups] = useState([]);
+
 
   useEffect(() => {
     // Fetch groups from Firebase
@@ -32,7 +34,7 @@ function GroupListScreen({ navigation }) {
   const renderGroupItem = ({ item }) => (
     <TouchableOpacity
       style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ddd' }}
-      onPress={() => navigation.navigate('DatesStudents', { groupId: item.id })}
+      onPress={() => navigation.navigate('StudentList', { groupId: item.id })}
     >
       <Text>{item.name}</Text>
     </TouchableOpacity>

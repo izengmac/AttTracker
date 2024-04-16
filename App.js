@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import SemesterPlanScreen from './screens/SemesterPlanScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
+import AddUserScreen from './screens/AddStudentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +61,10 @@ export default function App() {
           <Stack.Screen
             name="CreateGroupScreen"
             component={CreateGroupScreen}
+          />
+          <Stack.Screen
+            name="AddStudentScreen"
+            component={AddUserScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

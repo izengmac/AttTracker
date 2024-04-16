@@ -30,7 +30,7 @@ function CreateGroupScreen({ navigation }) {
           console.log('Group created with ID:', groupId);
           
           // Navigate back to the GroupListScreen and pass the new group ID
-          navigation.navigate('Home', { newGroupId: groupId });
+          navigation.navigate('Groups', { newGroupId: groupId });
         })
         .catch((error) => {
           console.error('Error creating group:', error);
