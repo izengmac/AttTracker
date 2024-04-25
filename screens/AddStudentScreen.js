@@ -7,6 +7,8 @@ function AddUserScreen({ navigation, route }) {
   const { groupId } = route.params;
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState('');
+  const currentDate = new Date().toISOString().split("T")[0];
+
 
   const handleAddUser = () => {
     if (userName.trim() !== '' && userAge.trim() !== '') {
@@ -30,11 +32,15 @@ function AddUserScreen({ navigation, route }) {
       set(newUserRef, newUserData)
         .then(() => {
           // User added successfully
-          console.log('User added with ID:', userId);
+          // console.log('User added with ID:', userId);
 
           // Update the members of the group with the new user
           const groupRef = ref(db, `groups/${groupId}/members`);
           update(groupRef, { [userId]: true });
+          // const AttendanceRef = ref(db, 'attendance');
+          // update(AttendanceRef, {[userId]:'absent'});
+          const userAttendanceRef = ref(db, `attendance/${userId}`);
+          update(userAttendanceRef, { [currentDate]: "absent" });
 
           // Navigate back to the StudentListScreen
           navigation.navigate('StudentList', { groupId: groupId });

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue,set } from "firebase/database";
 
 function CreateDateScreen() {
- 
+  
   const handleCreateDate = () => {
     const db = getDatabase();
     const currentDate = new Date().toISOString().split("T")[0];
@@ -15,10 +15,11 @@ function CreateDateScreen() {
     // Listen for changes once
     onValue(attendanceRef, (snapshot) => {
       const attendanceData = snapshot.val();
-      if (!attendanceData) {
+      console.log(attendanceData);
+      if (attendanceData) {
         Object.keys(attendanceData).forEach((userId) => {
-          ref(db, `attendance/${userId}/${currentDate}`)
-            .set("present")
+          const attendanceDateRef = ref(db, `attendance/${userId}`)
+          set(attendanceDateRef, { [currentDate]: 'present' })
             .then(() => {
               console.log(`Date ${currentDate} added for user ${userId}`);
             })
@@ -28,12 +29,12 @@ function CreateDateScreen() {
         });
       }
     });
-}
-   
+  };
 
+ 
   return (
     <View>
-     <Button title="Add Student" onPress={handleCreateDate} />
+      <Button title="Add Student" onPress={handleCreateDate} />
     </View>
   );
 }
