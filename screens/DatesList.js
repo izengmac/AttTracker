@@ -30,13 +30,16 @@ function DatesListScreen({ navigation }) {
             flexDirection: "row",
           }}
         >
+          <TouchableOpacity onPress={() => navigation.navigate("CreateDateScreen")} >
           <Image
             source={require("../src/assets/calendar-plus.png")}
             style={{
               width: 30,
               height: 30,
             }}
+            
           />
+        </TouchableOpacity>
           <Image
             source={require("../src/assets/menu-dots-vertical.png")}
             style={{

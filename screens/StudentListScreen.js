@@ -59,7 +59,7 @@ function StudentListScreen({ navigation }) {
           fontWeight: '600',
           textAlign: 'center'
         }}>Students</Text>
-        <TouchableOpacity onPress={handleAddUser}>
+        <TouchableOpacity onPress={handleAddUser} >
           <Image
             source={require('../src/assets/users-medical.png')}
             style={{

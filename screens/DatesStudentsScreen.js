@@ -1,8 +1,12 @@
 import React from 'react';
-import {View,Text,Image, TouchableOpacity} from 'react-native'
+import {View,Text,Image, TouchableOpacity} from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 
 function DatesStudentsScreen ({navigation}) {
+  const route = useRoute();
+  const { groupId } = route.params;
+  console.log(groupId);
   return (
     <View>
         <View style={{
@@ -26,9 +30,8 @@ function DatesStudentsScreen ({navigation}) {
             
 
         }}
-        onPress={() =>
-            navigation.navigate('StudentList')
-          }
+        onPress={() => navigation.navigate('StudentList', { groupId})}
+
         
         >
            <View 

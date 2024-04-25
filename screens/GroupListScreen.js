@@ -34,7 +34,7 @@ function GroupListScreen({ navigation, route}) {
   const renderGroupItem = ({ item }) => (
     <TouchableOpacity
       style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ddd' }}
-      onPress={() => navigation.navigate('StudentList', { groupId: item.id })}
+      onPress={() => navigation.navigate('DatesStudents', { groupId: item.id })}
     >
       <Text>{item.name}</Text>
     </TouchableOpacity>

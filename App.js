@@ -16,6 +16,8 @@ import { store } from './store/store';
 import SemesterPlanScreen from './screens/SemesterPlanScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import AddUserScreen from './screens/AddStudentScreen';
+import CreateDateScreen from './screens/CreateDateScreen';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +51,10 @@ export default function App() {
           <Stack.Screen
             name="DateDetails"
             component={DateDetails}
+          />
+           <Stack.Screen
+            name="CreateDateScreen"
+            component={CreateDateScreen}
           />
           <Stack.Screen
             name="Semester"
