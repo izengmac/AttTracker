@@ -41,7 +41,8 @@ function AddUserScreen({ navigation, route }) {
           // update(AttendanceRef, {[userId]:'absent'});
           const userAttendanceRef = ref(db, `attendance/${userId}`);
           update(userAttendanceRef, { [currentDate]: "absent" });
-
+          
+          //
           // Navigate back to the StudentListScreen
           navigation.navigate('StudentList', { groupId: groupId });
         })

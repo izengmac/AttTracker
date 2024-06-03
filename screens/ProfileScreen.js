@@ -13,6 +13,7 @@ import { child, getDatabase, get, ref } from "firebase/database";
 
 function ProfileScreen() {
   const [userdetails, setUserDetails] = useState({})
+  console.log('userdeatisl', userdetails)
   
   const app = getFirebaseApp();
   const auth = getAuth(app);
@@ -30,7 +31,7 @@ function ProfileScreen() {
       const userRef = child(dbRef, `users/${uid}`);
   
       const snapshot = await get(userRef)
-      console.log(snapshot.val())
+      console.log('snapshot',snapshot.val())
       setUserDetails(snapshot.val())
   
       return snapshot.val();

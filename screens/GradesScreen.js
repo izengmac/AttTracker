@@ -1,198 +1,146 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import _ from "lodash"
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, FlatList, Button } from 'react-native';
+import { getDatabase, ref, onValue, update, push } from 'firebase/database';
 
+const GradesScreen = () => {
+  const [grades, setGrades] = useState({});
+  const [editableData, setEditableData] = useState({});
+  const [newActivity, setNewActivity] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newRecord, setNewRecord] = useState('');
+  const db = getDatabase();
 
+  useEffect(() => {
+    const gradesRef = ref(db, `other_scores`);
+    onValue(gradesRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      setGrades(data);
+      setEditableData(data);
+    });
+  }, [db]);
 
-export default function App() {
-  const [ columns, setColumns ] = useState([
-    "Name",
-    "Gender",
-    "Breed",
-    "Weight",
-    "Age"
-  ])
-  const [ direction, setDirection ] = useState(null)
-  const [ selectedColumn, setSelectedColumn ] = useState(null)
-  const [ pets, setPets ] = useState([
-    {
-      Name: "Charlie",
-      Gender: "Male",
-      Breed: "Dog",
-      Weight: 12,
-      Age: 3
-    },
-    {
-      Name: "Max",
-      Gender: "Male",
-      Breed: "Dog",
-      Weight: 23,
-      Age: 7
-    },
-    {
-      Name: "Lucy",
-      Gender: "Female",
-      Breed: "Cat",
-      Weight: 5,
-      Age: 4
-    },
-    {
-      Name: "Oscar",
-      Gender: "Male",
-      Breed: "Turtle",
-      Weight: 13,
-      Age: 23
-    },
-    {
-      Name: "Daisy",
-      Gender: "Female",
-      Breed: "Bird",
-      Weight: 1.7,
-      Age: 3
-    },
-    {
-      Name: "Ruby",
-      Gender: "Female",
-      Breed: "Dog",
-      Weight: 6,
-      Age: 3
-    },
-    {
-      Name: "Milo",
-      Gender: "Male",
-      Breed: "Dog",
-      Weight: 11,
-      Age: 7
-    },
-    {
-      Name: "Toby",
-      Gender: "Male",
-      Breed: "Dog",
-      Weight: 34,
-      Age: 19
-    },
-    {
-      Name: "Lola",
-      Gender: "Female",
-      Breed: "Cat",
-      Weight: 4,
-      Age: 3
-    },
-    {
-      Name: "Jack",
-      Gender: "Male",
-      Breed: "Turtle",
-      Weight: 13,
-      Age: 23
-    },
-    {
-      Name: "Bailey",
-      Gender: "Female",
-      Breed: "Bird",
-      Weight: 2,
-      Age: 4
-    },
-    {
-      Name: "Bella",
-      Gender: "Female",
-      Breed: "Dog",
-      Weight: 6,
-      Age: 10
-    }
-  ])
+  const handleInputChange = (userId, activity, date, value) => {
+    setEditableData((prevData) => ({
+      ...prevData,
+      [userId]: {
+        ...prevData[userId],
+        [activity]: {
+          ...prevData[userId][activity],
+          [date]: value,
+        },
+      },
+    }));
+  };
 
-  const sortTable = (column) => {
-    const newDirection = direction === "desc" ? "asc" : "desc" 
-    const sortedData = _.orderBy(pets, [column],[newDirection])
-    setSelectedColumn(column)
-    setDirection(newDirection)
-    setPets(sortedData)
-  }
-  const tableHeader = () => (
-    <View style={styles.tableHeader}>
-      {
-        columns.map((column, index) => {
-          {
-            return (
-              <TouchableOpacity 
-                key={index}
-                style={styles.columnHeader} 
-                onPress={()=> sortTable(column)}>
-                <Text style={styles.columnHeaderTxt}>{column + " "} 
-                  { selectedColumn === column && <MaterialCommunityIcons 
-                      name={direction === "desc" ? "arrow-down-drop-circle" : "arrow-up-drop-circle"} 
-                    />
-                  }
-                </Text>
-              </TouchableOpacity>
-            )
-          }
-        })
-      }
-    </View>
-  )
+  const handleSave = () => {
+    const gradesRef = ref(db, `other_scores`);
+    update(gradesRef, editableData)
+      .then(() => {
+        console.log('Data updated successfully!');
+      })
+      .catch((error) => {
+        console.error('Error updating data:', error);
+      });
+  };
+
+  const handleAddActivity = (userId) => {
+    setEditableData((prevData) => ({
+      ...prevData,
+      [userId]: {
+        ...prevData[userId],
+        [newActivity]: {},
+      },
+    }));
+    setNewActivity('');
+  };
+
+  const handleAddRecord = (userId, activity) => {
+    setEditableData((prevData) => ({
+      ...prevData,
+      [userId]: {
+        ...prevData[userId],
+        [activity]: {
+          ...prevData[userId][activity],
+          [newDate]: newRecord,
+        },
+      },
+    }));
+    setNewDate('');
+    setNewRecord('');
+  };
+
+  const handleAddNewActivity = () => {
+    const newActivityRef = push(ref(db, 'other_scores'));
+    const newActivityKey = newActivityRef.key;
+    setGrades((prevGrades) => ({
+      ...prevGrades,
+      [newActivityKey]: { [newActivity]: {} },
+    }));
+    setEditableData((prevData) => ({
+      ...prevData,
+      [newActivityKey]: { [newActivity]: {} },
+    }));
+    setNewActivity('');
+  };
+
+  const renderActivity = ({ item }) => {
+    const [userId, activities] = item;
+
+    return (
+      <View style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{userId}</Text>
+        {Object.entries(activities).map(([activity, records]) => (
+          <View key={activity}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{activity}</Text>
+            {Object.entries(records).map(([date, value]) => (
+              <View key={date} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+                <Text style={{ width: 100 }}>{date}</Text>
+                <TextInput
+                  style={{ borderWidth: 1, borderColor: 'gray', padding: 5, flex: 1 }}
+                  value={String(value)}
+                  onChangeText={(newValue) => handleInputChange(userId, activity, date, newValue)}
+                  keyboardType="numeric"
+                />
+              </View>
+            ))}
+            <TextInput
+              placeholder="New Date"
+              value={newDate}
+              onChangeText={setNewDate}
+              style={{ borderWidth: 1, borderColor: 'gray', padding: 5, marginVertical: 5 }}
+            />
+            <TextInput
+              placeholder="New Record"
+              value={newRecord}
+              onChangeText={setNewRecord}
+              style={{ borderWidth: 1, borderColor: 'gray', padding: 5, marginVertical: 5 }}
+              keyboardType="numeric"
+            />
+            <Button title="Add Record" onPress={() => handleAddRecord(userId, activity)} />
+          </View>
+        ))}
+        <TextInput
+          placeholder="New Activity"
+          value={newActivity}
+          onChangeText={setNewActivity}
+          style={{ borderWidth: 1, borderColor: 'gray', padding: 5, marginVertical: 5 }}
+        />
+        <Button title="Add Activity" onPress={() => handleAddActivity(userId)} />
+      </View>
+    );
+  };
 
   return (
-    <View style={styles.container}>
-      <FlatList 
-        data={pets}
-        style={{width:"90%"}}
-        keyExtractor={(item, index) => index+""}
-        ListHeaderComponent={tableHeader}
-        stickyHeaderIndices={[0]}
-        renderItem={({item, index})=> {
-          return (
-            <View style={{...styles.tableRow, backgroundColor: index % 2 == 1 ? "#F0FBFC" : "white"}}>
-              <Text style={{...styles.columnRowTxt, fontWeight:"bold"}}>{item.Name}</Text>
-              <Text style={styles.columnRowTxt}>{item.Gender}</Text>
-              <Text style={styles.columnRowTxt}>{item.Breed}</Text>
-              <Text style={styles.columnRowTxt}>{item.Weight}</Text>
-              <Text style={styles.columnRowTxt}>{item.Age}</Text>
-            </View>
-          )
-        }}
+    <View style={{ flex: 1, padding: 20 }}>
+      <FlatList
+        data={Object.entries(grades)}
+        renderItem={renderActivity}
+        keyExtractor={(item) => item[0]}
       />
-      <StatusBar style="auto" />
+      <Button title="Save" onPress={handleSave} />
+      <Button title="Add New Activity" onPress={handleAddNewActivity} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop:80
-  },
-  tableHeader: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    backgroundColor: "#37C2D0",
-    borderTopEndRadius: 10,
-    borderTopStartRadius: 10,
-    height: 50
-  },
-  tableRow: {
-    flexDirection: "row",
-    height: 40,
-    alignItems:"center",
-  },
-  columnHeader: {
-    width: "20%",
-    justifyContent: "center",
-    alignItems:"center"
-  },
-  columnHeaderTxt: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  columnRowTxt: {
-    width:"20%",
-    textAlign:"center",
-  }
-});
-
+export default GradesScreen;

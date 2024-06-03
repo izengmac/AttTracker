@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@reduxjs/toolkit": "^2.2.3",
+    "date-fns": "^3.6.0",
     "expo": "~50.0.14",
     "expo-dev-client": "~3.3.11",
     "expo-document-picker": "~11.10.1",

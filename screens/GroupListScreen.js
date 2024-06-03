@@ -10,6 +10,7 @@ function GroupListScreen({ navigation, route }) {
     // Fetch groups from Firebase
     const db = getDatabase();
     const groupsRef = ref(db, "groups");
+    
     onValue(groupsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {

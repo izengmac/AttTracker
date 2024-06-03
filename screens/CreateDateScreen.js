@@ -1,42 +1,54 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
-import { getDatabase, ref, onValue,set } from "firebase/database";
+import React from "react";
+import { View, Text, Button, Alert } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { getDatabase, ref, set, get } from "firebase/database";
+import { format } from "date-fns";
 
-function CreateDateScreen() {
-  
-  const handleCreateDate = () => {
-    const db = getDatabase();
-    const currentDate = new Date().toISOString().split("T")[0];
-    console.log(currentDate);
+const CreateDateScreen = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { groupId } = route.params;
+  const db = getDatabase();
 
-    // Loop through each user and add the new date to their attendance tree
-    const attendanceRef = ref(db, "attendance");
+  const handleCreateDate = async () => {
+    try {
+      const currentDate = format(new Date(), "yyyy-MM-dd");
+      const groupRef = ref(db, `groups/${groupId}`);
+      const groupSnapshot = await get(groupRef);
 
-    // Listen for changes once
-    onValue(attendanceRef, (snapshot) => {
-      const attendanceData = snapshot.val();
-      console.log(attendanceData);
-      if (attendanceData) {
-        Object.keys(attendanceData).forEach((userId) => {
-          const attendanceDateRef = ref(db, `attendance/${userId}`)
-          set(attendanceDateRef, { [currentDate]: 'present' })
-            .then(() => {
-              console.log(`Date ${currentDate} added for user ${userId}`);
-            })
-            .catch((error) => {
-              console.error("Error adding date to attendance:", error);
-            });
-        });
+      if (!groupSnapshot.exists()) {
+        Alert.alert("Error", "Group not found.");
+        return;
       }
-    });
+
+      const groupData = groupSnapshot.val();
+      const memberIds = groupData.members ? Object.keys(groupData.members) : [];
+
+      if (memberIds.length === 0) {
+        Alert.alert("Error", "No members found in the group.");
+        return;
+      }
+
+      // Update attendance for each member in the group
+      await Promise.all(memberIds.map(async (userId) => {
+        const userAttendanceRef = ref(db, `attendance/${userId}/${currentDate}`);
+        await set(userAttendanceRef, "present");
+      }));
+
+      Alert.alert("Success", `Attendance for ${currentDate} created successfully.`);
+      navigation.goBack();
+    } catch (error) {
+      console.error("Error creating date:", error);
+      Alert.alert("Error", "An error occurred while creating the date.");
+    }
   };
 
- 
   return (
-    <View>
-      <Button title="Add Student" onPress={handleCreateDate} />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Create a new attendance date</Text>
+      <Button title="Create Date" onPress={handleCreateDate} />
     </View>
   );
-}
+};
 
 export default CreateDateScreen;
