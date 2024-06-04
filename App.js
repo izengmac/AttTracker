@@ -17,6 +17,7 @@ import SemesterPlanScreen from "./screens/SemesterPlanScreen";
 import CreateGroupScreen from "./screens/CreateGroupScreen";
 import AddUserScreen from "./screens/AddStudentScreen";
 import CreateDateScreen from "./screens/CreateDateScreen";
+import AddActivityScreen from "./screens/AddActivityScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,9 @@ export default function App() {
           <Stack.Screen name="CreateDateScreen" component={CreateDateScreen} />
           <Stack.Screen name="Semester" component={SemesterPlanScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="AddActivityScreen" component={AddActivityScreen} />
+
+
           <Stack.Screen
             name="CreateGroupScreen"
             component={CreateGroupScreen}
